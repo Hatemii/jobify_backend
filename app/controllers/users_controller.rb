@@ -63,6 +63,8 @@ class UsersController < ApplicationController
         token: token, 
         user: @user,
         admin: @user.admin,
+        recruiter: @user.recruiter,
+        user_ud: @user.id,
         loggedIn: true
       }
     else
