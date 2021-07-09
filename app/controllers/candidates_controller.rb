@@ -7,6 +7,7 @@ class CandidatesController < ApplicationController
   def show
     candidate = Candidate.find(params[:id])
     render json: candidate
+    # render json: job.as_json.merge(:image => url_for(job.image))
   end
 
   def new
@@ -21,8 +22,6 @@ class CandidatesController < ApplicationController
 
   def create
     candidate = Candidate.create(candidate_params)
-    candidate.job_id = Job.first.id
-    candidate.save
     render json: candidate if candidate.save
   end
 
@@ -40,6 +39,6 @@ class CandidatesController < ApplicationController
 
   private
     def candidate_params
-      params.permit(:name, :surname, :email, :location, :phone)
+      params.permit(:name, :surname, :email, :location, :phone, :job_id, :image)
     end
 end
