@@ -6,7 +6,7 @@ class JobsController < ApplicationController
     
       def show
         job = Job.find(params[:id])
-        render json: job.as_json.merge(:image => url_for(job.image))
+        render json: job
       end
     
       def new
@@ -16,8 +16,6 @@ class JobsController < ApplicationController
     
       def create
         job = Job.create(job_params)
-        job.user_id = User.first.id
-        job.save
         render json: job if job.save
       end
     
@@ -40,6 +38,6 @@ class JobsController < ApplicationController
 
       private
         def job_params
-          params.permit(:title, :description, :level, :job_type, :salary, :image)
+          params.permit(:title, :description, :level, :job_type, :salary, :user_id)
         end
 end
