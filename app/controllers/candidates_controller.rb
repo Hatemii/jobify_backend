@@ -1,13 +1,15 @@
 class CandidatesController < ApplicationController
- def index
+  
+  def index
     candidates = Candidate.all.order("id DESC")
-    render json: candidates
+    render json: candidates.map{ |candidate| 
+      candidate.as_json.merge(image: url_for(candidate.image))
+    }
   end
 
   def show
     candidate = Candidate.find(params[:id])
-    render json: candidate
-    # render json: job.as_json.merge(:image => url_for(job.image))
+    render json: candidate.as_json.merge(image: url_for(candidate.image))
   end
 
   def new
