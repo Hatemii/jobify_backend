@@ -24,6 +24,7 @@ class CandidatesController < ApplicationController
 
   def create
     candidate = Candidate.create(candidate_params)
+    # candidate.images.attach(params[:images])
     render json: candidate if candidate.save
   end
 
