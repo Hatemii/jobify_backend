@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  before_action :authorized, except: %i[create]
+
   def index
     users = User.all.order(id: :desc)
     render json: users
@@ -24,7 +26,7 @@ class UsersController < ApplicationController
     end
 
     rescue ActiveRecord::RecordInvalid => e
-      render json: {message: e.message }
+      render json: { message: e.message }
   end
 
   def update

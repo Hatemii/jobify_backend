@@ -1,6 +1,6 @@
 class JobsController < ApplicationController
   def index
-    jobs = Job.all.order("id DESC")
+    jobs = Job.all.order(id: :desc)
     render json: jobs
   end
 
