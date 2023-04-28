@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_30_154136) do
+ActiveRecord::Schema.define(version: 2023_04_28_142632) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -40,28 +40,14 @@ ActiveRecord::Schema.define(version: 2021_06_30_154136) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "candidates", force: :cascade do |t|
-    t.string "name"
-    t.string "surname"
-    t.string "email"
-    t.string "location"
-    t.integer "phone"
-    t.integer "job_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["job_id"], name: "index_candidates_on_job_id"
-  end
-
   create_table "jobs", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.string "level"
     t.string "job_type"
     t.integer "salary"
-    t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -71,12 +57,10 @@ ActiveRecord::Schema.define(version: 2021_06_30_154136) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "password_digest"
-    t.boolean "admin", default: false
-    t.boolean "recruiter", default: false
+    t.string "phone"
+    t.string "role"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "candidates", "jobs"
-  add_foreign_key "jobs", "users"
 end
