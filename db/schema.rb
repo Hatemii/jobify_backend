@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_28_142632) do
+ActiveRecord::Schema.define(version: 2023_04_28_143641) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -40,6 +40,31 @@ ActiveRecord::Schema.define(version: 2023_04_28_142632) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "candidates", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "job_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_id"], name: "index_candidates_on_job_id"
+    t.index ["user_id"], name: "index_candidates_on_user_id"
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "company_users", force: :cascade do |t|
+    t.integer "company_id", null: false
+    t.integer "user_id", null: false
+    t.string "role"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id"], name: "index_company_users_on_company_id"
+    t.index ["user_id"], name: "index_company_users_on_user_id"
+  end
+
   create_table "jobs", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -48,6 +73,8 @@ ActiveRecord::Schema.define(version: 2023_04_28_142632) do
     t.integer "salary"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "company_id", null: false
+    t.index ["company_id"], name: "index_jobs_on_company_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -58,9 +85,13 @@ ActiveRecord::Schema.define(version: 2023_04_28_142632) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "password_digest"
     t.string "phone"
-    t.string "role"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "candidates", "jobs"
+  add_foreign_key "candidates", "users"
+  add_foreign_key "company_users", "companies"
+  add_foreign_key "company_users", "users"
+  add_foreign_key "jobs", "companies"
 end
