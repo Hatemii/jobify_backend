@@ -10,7 +10,7 @@ class ApplicationController < ActionController::API
   end
 
   def bearer_token
-    bearer_token = request.headers['Authorization']
+    bearer_token = request.headers['Authorization'] # Authorization -> Bearer Token -> "token"
     bearer_token.split(" ")[1] if bearer_token
   end
   
