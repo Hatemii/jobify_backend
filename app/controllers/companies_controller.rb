@@ -3,7 +3,7 @@ class CompaniesController < ApplicationController
   before_action :authorized
 
   def index
-    companies = Company.all
+    companies = Company.all.order(id: :desc)
     render json: companies
   end
 
@@ -11,13 +11,13 @@ class CompaniesController < ApplicationController
     company = find_company
     
     if company
-      render json:{
-        company: company,
-        company_users: company.company_users
-      }
+      render json: company.as_json.merge(company_users: company.company_users)
     else
       render json: { message: "Company not found" }
     end
+
+    rescue ActiveRecord::RecordNotFound => e
+      render json: { message: e.message }
   end
 
   def create
@@ -44,11 +44,14 @@ class CompaniesController < ApplicationController
 
     rescue ActiveRecord::RecordNotFound => e
       render json: { message: e.message }
+
+    rescue ActiveRecord::RecordInvalid => e
+      render json: { message: e.message }
   end
 
   def destroy
     company = find_company
-    render json: "Company deleted successfully" if company.destroy!
+    render json: { message: "Company deleted successfully" } if company.destroy!
     
     rescue ActiveRecord::RecordNotFound => e
         render json: { message: e.message }
