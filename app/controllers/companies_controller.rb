@@ -51,7 +51,7 @@ class CompaniesController < ApplicationController
 
   def destroy
     company = find_company
-    render json: { message: "Company deleted successfully" } if company.destroy!
+    render json: { message: "Successfully deleted" } if company.destroy!
     
     rescue ActiveRecord::RecordNotFound => e
         render json: { message: e.message }
