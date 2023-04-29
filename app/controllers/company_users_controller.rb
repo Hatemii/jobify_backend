@@ -9,7 +9,7 @@ class CompanyUsersController < ApplicationController
 
   def show
     company_user = find_company_user
-    render json: company_user.as_json
+    render json: company_user if company_user
 
     rescue ActiveRecord::RecordNotFound => e
         render json: { message: e.message }
