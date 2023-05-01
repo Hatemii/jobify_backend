@@ -1,7 +1,5 @@
 class UsersController < ApplicationController
 
-  before_action :authorized, except: %i[create]
-
   def index
     users = User.all.order(id: :desc)
     render json: users
@@ -10,23 +8,6 @@ class UsersController < ApplicationController
   def show
     user = User.find(params[:id])
     render json: user
-  end
-
-  def create
-    user = User.create!(user_params)
-    
-    if user.valid?
-      token = encode_token({user_id: user.id})
-      render json: { 
-        user: user, 
-        token: token 
-      }
-    else
-      render json: { message: "something went wrong" }
-    end
-
-    rescue ActiveRecord::RecordInvalid => e
-      render json: { message: e.message }
   end
 
   def update

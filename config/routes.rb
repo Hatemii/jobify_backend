@@ -3,8 +3,12 @@ Rails.application.routes.draw do
   resources :jobs
   resources :candidates
   resources :companies
-  resources :company_users, except: %i[index]
 
+  # custom routes
+  resources :company_users, except: %i[index]
   get "/company_users/:company_id", to: "company_users#index"
+  
+  # sessions
   post "/login", to: "sessions#login"
+  post "/signup", to: "sessions#signup"
 end

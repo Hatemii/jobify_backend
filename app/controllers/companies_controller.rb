@@ -1,7 +1,5 @@
 class CompaniesController < ApplicationController
 
-  before_action :authorized
-
   def index
     companies = Company.all.order(id: :desc)
     render json: companies

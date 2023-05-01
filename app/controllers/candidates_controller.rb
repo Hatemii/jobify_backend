@@ -1,6 +1,4 @@
 class CandidatesController < ApplicationController
-
-  before_action :authorized
   
   def index
     candidates = Candidate.all

@@ -1,7 +1,5 @@
 class CompanyUsersController < ApplicationController
 
-  before_action :authorized
-
   def index
     company_users = CompanyUser.all.where(company_id: params[:company_id])
     render json: company_users
