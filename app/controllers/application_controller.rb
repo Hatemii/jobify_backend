@@ -17,8 +17,15 @@ class ApplicationController < ActionController::API
   
   def logged_in_user
     if bearer_token
-      data = decode_token(bearer_token)
-      User.find(data[0]["user_id"]) if data 
+      # find user by token
+      user = User.find_by(confirmation_token: bearer_token)
+      return unless user
+      
+      # check expiration token
+      return if (user.expire_token_at.to_i - Time.now.to_i) <= 0
+
+      # return user
+      user
     end
   end
   
